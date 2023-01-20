@@ -3,10 +3,10 @@ import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize, 
 
 export class ForumComment extends Model<InferAttributes<ForumComment>, InferCreationAttributes<ForumComment>>{
     declare id: number;
-    declare User_id: number;
-    declare Forum_id: number;
+    declare userId: number;
+    declare forumId: number;
     declare comment: string;
-    declare comment_datetime?: Date;
+    declare commentDatetime?: Date;
     declare likes: number
 }
 
@@ -18,11 +18,11 @@ export function ForumCommentFactory(sequelize: Sequelize) {
             primaryKey: true,
             allowNull: false
         },
-        User_id: {
+        userId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        Forum_id: {
+        forumId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
@@ -30,16 +30,17 @@ export function ForumCommentFactory(sequelize: Sequelize) {
             type: DataTypes.STRING,
             allowNull: false
         },
-        comment_datetime: {
+        commentDatetime: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,
         },
         likes: {
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            defaultValue: 0
         }
     }, {
-        tableName: 'Forum_comment',
+        tableName: 'forumComment',
         freezeTableName: true,
         sequelize
     });

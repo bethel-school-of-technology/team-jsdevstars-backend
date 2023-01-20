@@ -3,9 +3,9 @@ import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize, 
 
 export class Forum extends Model<InferAttributes<Forum>, InferCreationAttributes<Forum>>{
     declare id: number;
-    declare User_id: number;
-    declare topic_heading: string;
-    declare topic_body: string;
+    declare userId: number;
+    declare topicHeading: string;
+    declare topicBody: string;
     declare createdAt?: Date;
 }
 
@@ -17,16 +17,16 @@ export function ForumFactory(sequelize: Sequelize) {
             primaryKey: true,
             allowNull: false
         },
-        User_id: {
+        userId: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        topic_heading: {
+        topicHeading: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
         },
-        topic_body: {
+        topicBody: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -36,7 +36,7 @@ export function ForumFactory(sequelize: Sequelize) {
             defaultValue: DataTypes.NOW,
         }
     }, {
-        tableName: 'Forum',
+        tableName: 'forum',
         freezeTableName: true,
         sequelize
     });
