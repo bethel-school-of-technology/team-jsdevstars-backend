@@ -4,8 +4,8 @@ import { User } from './user'
 
 export class ArticleComment extends Model<InferAttributes<ArticleComment>, InferCreationAttributes<ArticleComment>>{
     declare id: number;
-    declare userId: number;
-    declare articleId: number;
+    // declare userId: number;
+    // declare articleId: number;
     declare comment: string;
     declare commentDatetime?: Date;
     declare likes: number
@@ -19,14 +19,14 @@ export function ArticleCommentFactory(sequelize: Sequelize) {
             primaryKey: true,
             allowNull: false
         },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        articleId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
+        // userId: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false
+        // },
+        // articleId: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false
+        // },
         comment: {
             type: DataTypes.STRING,
             allowNull: false
@@ -47,6 +47,6 @@ export function ArticleCommentFactory(sequelize: Sequelize) {
 }
 
 export function AssociateArticleCommentArticleUser() {
-    Article.hasMany(ArticleComment, { foreignKey: 'articleId' });
-    ArticleComment.belongsTo(User, {foreignKey: 'userId' })
+    Article.hasMany(ArticleComment);
+    ArticleComment.belongsTo(User)
 }
