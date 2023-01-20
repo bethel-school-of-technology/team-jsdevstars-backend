@@ -6,7 +6,7 @@ export class Article extends Model<InferAttributes<Article>, InferCreationAttrib
   declare articleId: number
   declare title: string
   declare content: string
-  declare userId: number
+  // declare userId: number
   declare createdAt?: Date
 }
 
@@ -27,10 +27,10 @@ export function ArticleFactory (sequelize: Sequelize) {
         type: DataTypes.STRING,
         allowNull: false
       },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-      },
+      // userId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: false
+      // },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -46,6 +46,6 @@ export function ArticleFactory (sequelize: Sequelize) {
 }
 
 export function AssociateUserArticles() {
-    User.hasMany(Article, { foreignKey: 'userId' });
-    Article.belongsTo(User, {foreignKey: 'userId' })
+    User.hasMany(Article);
+    Article.belongsTo(User)
 }
