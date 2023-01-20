@@ -1,9 +1,9 @@
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
+import { User } from "./user"; 
 
 
 export class Forum extends Model<InferAttributes<Forum>, InferCreationAttributes<Forum>>{
     declare id: number;
-    declare userId: number;
     declare topicHeading: string;
     declare topicBody: string;
     declare createdAt?: Date;
@@ -15,10 +15,6 @@ export function ForumFactory(sequelize: Sequelize) {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
-            allowNull: false
-        },
-        userId: {
-            type: DataTypes.INTEGER,
             allowNull: false
         },
         topicHeading: {
@@ -40,4 +36,5 @@ export function ForumFactory(sequelize: Sequelize) {
         freezeTableName: true,
         sequelize
     });
+    User.hasMany(Forum);
 }

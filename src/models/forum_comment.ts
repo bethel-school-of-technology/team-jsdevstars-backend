@@ -1,10 +1,11 @@
+import { userInfo } from "os";
 import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
+import { Forum } from "./forum"; 
+import { User } from "./user";
 
 
 export class ForumComment extends Model<InferAttributes<ForumComment>, InferCreationAttributes<ForumComment>>{
     declare id: number;
-    declare userId: number;
-    declare forumId: number;
     declare comment: string;
     declare commentDatetime?: Date;
     declare likes: number
@@ -16,14 +17,6 @@ export function ForumCommentFactory(sequelize: Sequelize) {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
-            allowNull: false
-        },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        forumId: {
-            type: DataTypes.INTEGER,
             allowNull: false
         },
         comment: {
@@ -44,4 +37,6 @@ export function ForumCommentFactory(sequelize: Sequelize) {
         freezeTableName: true,
         sequelize
     });
+    Forum.hasMany(ForumComment);
+    User.hasMany(ForumComment);
 }
