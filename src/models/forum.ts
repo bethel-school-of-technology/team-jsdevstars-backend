@@ -36,5 +36,9 @@ export function ForumFactory(sequelize: Sequelize) {
         freezeTableName: true,
         sequelize
     });
+}
+
+export function AssociateForumUser() {
     User.hasMany(Forum);
+    Forum.belongsTo(User)
 }
