@@ -1,11 +1,19 @@
-import { NextFunction, Request, Response, Router } from 'express'
+import { Sequelize } from 'sequelize'
+// import { UserFactory } from './user'
+// import { TweetFactory } from './tweet'
+// import { AssociateUserTweets } from './tweet'
 
-const router = Router()
+const dbName = 'dadsDB'
+const username = 'root'
+const password = 'Password1!'
+const sequelize = new Sequelize(dbName, username, password, {
+  host: 'localhost',
+  port: 3306,
+  dialect: 'mysql',
+})
 
-function welcomeGreeting(req: Request, res: Response, next: NextFunction) {
-  res.send('Hello user! Welcome to my site.')
-}
+// TweetFactory(sequelize)
+// UserFactory(sequelize)
+// AssociateUserTweets()
 
-router.get('/', welcomeGreeting)
-
-export default router
+export const db = sequelize

@@ -1,9 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = require("express");
-var router = (0, express_1.Router)();
-function welcomeGreeting(req, res, next) {
-    res.send('Hello user! Welcome to my site.');
-}
-router.get('/', welcomeGreeting);
-exports.default = router;
+exports.dadsDB = void 0;
+const sequelize_1 = require("sequelize");
+// import { UserFactory } from './user'
+// import { TweetFactory } from './tweet'
+// import { AssociateUserTweets } from './tweet'
+const dbName = 'dadsDB';
+const username = 'root';
+const password = 'Password1!';
+const sequelize = new sequelize_1.Sequelize(dbName, username, password, {
+    host: 'localhost',
+    port: 3306,
+    dialect: 'mysql',
+});
+// TweetFactory(sequelize)
+// UserFactory(sequelize)
+// AssociateUserTweets()
+exports.dadsDB = sequelize;
