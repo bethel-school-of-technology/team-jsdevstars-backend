@@ -1,12 +1,12 @@
 import express, { NextFunction, Request, Response } from 'express'
 import morgan from 'morgan'
-import mysql2 from 'mysql2'
+import mysql from 'mysql'
 
-let dbConnection = mysql2.createConnection({
+let dbConnection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'Password1!',
-  database: 'projectDB',
+  database: 'dadsDB',
 })
 
 dbConnection.connect(function (err: any) {
