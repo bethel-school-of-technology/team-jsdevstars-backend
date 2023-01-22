@@ -38,7 +38,7 @@ export function ArticleCommentFactory(sequelize: Sequelize) {
 
 export function AssociateArticleComments () {
     Article.hasMany(ArticleComment);
-    ArticleComment.belongsTo(Article, { through: User});
+    ArticleComment.belongsTo(Article);
     
     User.hasMany(ArticleComment)
     ArticleComment.belongsTo(User);
