@@ -25,5 +25,4 @@ AssociateArticleComments();
 AssociateForumUser();
 AssociateForumCommentForumUser();
 
-
 export const db = sequelize;
