@@ -1,20 +1,28 @@
 import { Sequelize } from "sequelize";
 import { UserFactory } from "./user";
-import { TweetFactory } from "./tweet";
-import { AssociateUserTweets } from "./tweet";
+import { ArticleFactory, AssociateUserArticles } from "./article";
+import { ArticleCommentFactory, AssociateArticleComments } from "./articleComment";
+import { AssociateForumUser, ForumFactory } from "./forum";
+import { AssociateForumCommentForumUser, ForumCommentFactory } from "./forum_comment";
 
-const dbName = 'twitterDB';
-const username = 'root';
+const dbName = 'fordadsdb';
+const username = 'fordads';
 const password = 'Password1!';
 
 const sequelize = new Sequelize(dbName, username, password, {
-host: 'localhost',
-port: 3306,
-dialect: 'mysql'
+    host: 'db4free.net',
+    port: 3306,
+    dialect: 'mysql'
 });
 
-TweetFactory(sequelize);
+ArticleFactory(sequelize);
+ArticleCommentFactory(sequelize);
+ForumFactory(sequelize);
+ForumCommentFactory(sequelize);
 UserFactory(sequelize);
-AssociateUserTweets();
+AssociateUserArticles();
+AssociateArticleComments();
+AssociateForumUser();
+AssociateForumCommentForumUser();
 
 export const db = sequelize;
