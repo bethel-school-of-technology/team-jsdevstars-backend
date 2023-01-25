@@ -1,16 +1,16 @@
-// import { Router } from 'express';
-// import { createArticle, deleteArticle, getAllArticles, getArticle, updateArticle } from '../controllers/articleController';
+import { Router } from 'express';
+import { createArticle, deleteArticle, getAllArticles, getArticle, updateArticle } from '../controllers/articleController';
 
-// const router = Router();
+const router = Router();
 
-// router.get('/', getAllArticles);
+router.get('/', getAllArticles);
 
-// router.post('/', createArticle);
+router.post('/', createArticle);
 
-// router.get('/:tweetId', getArticle);
+router.get('/:articleId', getArticle);
 
-// router.put('/:tweetId', updateArticle);
+router.put('/:articleId', updateArticle);
 
-// router.delete('/:tweetId', deleteArticle);
+router.delete('/:articleId', deleteArticle);
 
-// export default router;
+export default router;
