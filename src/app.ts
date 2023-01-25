@@ -1,6 +1,9 @@
 import morgan from "morgan";
 import express, { NextFunction, Request, Response } from 'express'
 import { db } from './models';
+import articleRoutes from './routes/articleRoutes'
+import articleCommentRoutes from './routes/articleCommentRoutes'
+import userRoutes from './routes/userRoutes'
 
 
 const app = express();
@@ -15,7 +18,9 @@ app.use(cors())
 
 // routes
 app.use('/api/articles', articleRoutes);
-app.use('/api/forum', forumRoutes);
+app.use('/api/articles', articleCommentRoutes)
+// app.use('/api/forum', forumRoutes);
+// app.use('/api/forum', forumCommentRoutes);
 app.use('/api/users', userRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {

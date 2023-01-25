@@ -11,7 +11,7 @@ router.post('/login', loginUser);
 router.get('/:userId', getUser);
 
 // correct path in postman
-router.get('/:userId', getUserComments);
+// router.get('/:userId', getUserComments);
 
 // not working in postman
 // router.get('/getLoggedinTweets', getloggedinTweets)
