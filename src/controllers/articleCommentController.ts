@@ -5,26 +5,26 @@ import { ArticleComment } from '../models/articleComment'
 import { verifyUser } from '../services/auth'
 
 
-export const getAllArticles: RequestHandler = async (req, res, next) => {
-    let articles = await Article.findAll({
+export const getAllArticleComments: RequestHandler = async (req, res, next) => {
+    let articleComments = await ArticleComment.findAll({
       include: { model: User}
     })
-    res.status(200).json(articles)
+    res.status(200).json(articleComments)
     // console.log(articles)
   }
   
-  export const createArticle: RequestHandler = async (req, res, next) => {
+  export const createArticleComment: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req)
   
     if (!user) {
-      return res.status(402).send('Sign in to share a blog post')
+      return res.status(402).send('Sign in to post a comment')
     }
   
-    let newArticle: Article = req.body
-    newArticle.userId = user.userId
+    let newArticleComment: ArticleComment = req.body
+    newArticleComment.userId = user.userId
   
-    if (newArticle.content) {
-      let created = await Article.create(newArticle)
+    if (newArticleComment.comment) {
+      let created = await ArticleComment.create(newArticleComment)
       res.status(201).json(created)
     } else {
       res.status(403).send('Write something to post')
@@ -32,11 +32,11 @@ export const getAllArticles: RequestHandler = async (req, res, next) => {
   }
   
   
-  export const getArticle: RequestHandler = async (req, res, next) => {
-    let articleId = req.params.articleId
-    let article = await Article.findByPk(articleId)
-    if (article) {
-      res.status(200).json(article)
+  export const getArticleComment: RequestHandler = async (req, res, next) => {
+    let articleId = req.params.ArticleArticleId
+    let articleComment = await ArticleComment.findByPk(articleId)
+    if (articleComment) {
+      res.status(200).json(articleComment)
     } else {
       res.status(412).json('No articles here')
     }
@@ -44,27 +44,27 @@ export const getAllArticles: RequestHandler = async (req, res, next) => {
   
  
   
-  export const updateArticle: RequestHandler = async (req, res, next) => {
+  export const updateArticleComment: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req)
   
     if (!user) {
       return res.status(403).send()
     }
   
-    let articleId = req.params.articleId
-    let newArticle: Article = req.body
+    let articleId = req.params.ArticleArticleId
+    let newArticleComment: ArticleComment = req.body
   
-    let articleFound = await Article.findByPk(articleId)
+    let articleFound = await ArticleComment.findByPk(articleId)
   
     if (
-      articleFound &&
-      articleFound.articleId &&
-      articleFound.userId == newArticle.articleId &&
-      newArticle.content &&
+      articleCommentFound &&
+      articleCommentFound.id &&
+      articleCommentFound.userId == newArticleComment.id &&
+      newArticleComment.comment &&
       user.userId
     ) {
-      await Article.update(newArticle, {
-        where: { articleId: articleId } 
+      await ArticleComment.update(newArticleComment, {
+        where: { id: id } 
       })
       res.status(200).json('You are truly successful')
     } else {
@@ -72,20 +72,20 @@ export const getAllArticles: RequestHandler = async (req, res, next) => {
     }
   }
   
-  export const deleteArticle: RequestHandler = async (req, res, next) => {
+  export const deleteArticleComment: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req)
   
     if (!user) {
       return res.status(409).send()
     }
   
-    let articleId = req.params.articleId
-    let found = await Article.findByPk(articleId)
+    let CommentId = req.params.articleId
+    let found = await ArticleComment.findByPk(id)
     let newFound = req.params.userId
   
-    if (found && found.articleId && found.userId) {
-      await Article.destroy({
-        where: { articleId: articleId }
+    if (found && found.id && found.userId) {
+      await ArticleComment.destroy({
+        where: { id: id }
       })
       res.status(200).json()
     } else {
