@@ -39,6 +39,16 @@ export function ForumFactory(sequelize: Sequelize) {
 }
 
 export function AssociateForumUser() {
-    User.hasMany(Forum);
-    Forum.belongsTo(User)
+    User.hasMany(Forum, {
+        foreignKey: {
+            name: 'userId',
+            allowNull: false
+        }
+    });
+    Forum.belongsTo(User, {
+        foreignKey: {
+            name: 'userId',
+            allowNull: false
+        }
+    })
 }

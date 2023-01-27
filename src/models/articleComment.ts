@@ -36,10 +36,30 @@ export function ArticleCommentFactory(sequelize: Sequelize) {
     });
 }
 
-export function AssociateArticleComments () {
-    Article.hasMany(ArticleComment);
-    ArticleComment.belongsTo(Article);
-    
-    User.hasMany(ArticleComment)
-    ArticleComment.belongsTo(User);
+export function AssociateArticleComments() {
+    Article.hasMany(ArticleComment, {
+        foreignKey: {
+            name: "articleId",
+            allowNull: false
+        },
+        onDelete: "CASCADE"
+    });
+    ArticleComment.belongsTo(Article, {
+        foreignKey: {
+            name: "articleId",
+            allowNull: false
+        },
+        onDelete: "CASCADE"});
+    User.hasMany(ArticleComment, {
+        foreignKey: {
+            name: "userId",
+            allowNull: false
+        }
+    });
+    ArticleComment.belongsTo(User, {
+        foreignKey: {
+            name: "userId",
+            allowNull: false
+        }
+    })
 }
