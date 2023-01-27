@@ -3,7 +3,7 @@ import { User } from "./user";
 
 
 export class Forum extends Model<InferAttributes<Forum>, InferCreationAttributes<Forum>>{
-    declare id: number;
+    declare forumId: number;
     declare topicHeading: string;
     declare topicBody: string;
     declare createdAt?: Date;
@@ -11,7 +11,7 @@ export class Forum extends Model<InferAttributes<Forum>, InferCreationAttributes
 
 export function ForumFactory(sequelize: Sequelize) {
     Forum.init({
-        id: {
+        forumId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,

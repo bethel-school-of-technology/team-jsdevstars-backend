@@ -4,7 +4,7 @@
 // const router = Router();
 // router.get('/', getAllArticles);
 // router.post('/', createArticle);
-// router.get('/:tweetId', getArticle);
-// router.put('/:tweetId', updateArticle);
-// router.delete('/:tweetId', deleteArticle);
+// router.get('/:articleId', getArticle);
+// router.put('/:articleId', updateArticle);
+// router.delete('/:articleId', deleteArticle);
 // export default router;

@@ -8,7 +8,7 @@ class Forum extends sequelize_1.Model {
 exports.Forum = Forum;
 function ForumFactory(sequelize) {
     Forum.init({
-        id: {
+        forumId: {
             type: sequelize_1.DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
@@ -36,7 +36,17 @@ function ForumFactory(sequelize) {
 }
 exports.ForumFactory = ForumFactory;
 function AssociateForumUser() {
-    user_1.User.hasMany(Forum);
-    Forum.belongsTo(user_1.User);
+    user_1.User.hasMany(Forum, {
+        foreignKey: {
+            name: 'userId',
+            allowNull: false
+        }
+    });
+    Forum.belongsTo(user_1.User, {
+        foreignKey: {
+            name: 'userId',
+            allowNull: false
+        }
+    });
 }
 exports.AssociateForumUser = AssociateForumUser;

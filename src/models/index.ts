@@ -3,7 +3,7 @@ import { UserFactory } from "./user";
 import { ArticleFactory, AssociateUserArticles } from "./article";
 import { ArticleCommentFactory, AssociateArticleComments } from "./articleComment";
 import { AssociateForumUser, ForumFactory } from "./forum";
-import { AssociateForumCommentForumUser, ForumCommentFactory } from "./forum_comment";
+import { AssociateForumCommentForumUser, ForumCommentFactory } from "./forumComment";
 
 const dbName = 'fordadsdb';
 const username = 'fordads';

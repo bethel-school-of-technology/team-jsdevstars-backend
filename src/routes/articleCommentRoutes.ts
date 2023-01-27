@@ -12,6 +12,6 @@ router.get('/:articleId', getArticleComment);
 
 router.put('/:articleId', updateArticleComment);
 
-router.delete('/:articleId', deleteArticleComment;
+router.delete('/:articleId', deleteArticleComment);
 
 export default router;

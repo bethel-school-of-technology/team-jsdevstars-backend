@@ -15,12 +15,24 @@ const hashPassword = async (plainTextPassword) => {
 };
 exports.hashPassword = hashPassword;
 const comparePasswords = async (plainTextPassword, hashPassword) => {
-    return await bcrypt_1.default.compare(plainTextPassword, hashPassword);
+    try {
+        return await bcrypt_1.default.compare(plainTextPassword, hashPassword);
+    }
+    catch (error) {
+        console.log(error);
+        throw new Error("Error occured while comparing password");
+    }
 };
 exports.comparePasswords = comparePasswords;
 const signUserToken = async (user) => {
-    let token = jsonwebtoken_1.default.sign({ userId: user.userId }, secret, { expiresIn: '5hr' });
-    return token;
+    try {
+        let token = jsonwebtoken_1.default.sign({ userId: user.userId }, secret, { expiresIn: '5hr' });
+        return token;
+    }
+    catch (error) {
+        console.log(error);
+        throw new Error("Error occured while signing token");
+    }
 };
 exports.signUserToken = signUserToken;
 const verifyUser = async (req) => {
@@ -32,7 +44,8 @@ const verifyUser = async (req) => {
             return user_1.User.findByPk(decoded.userId);
         }
         catch (err) {
-            return null;
+            console.log(err);
+            throw new Error('Error occured while verifying token');
         }
     }
     else {

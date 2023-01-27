@@ -7,7 +7,6 @@ export class Article extends Model<InferAttributes<Article>, InferCreationAttrib
   declare title: string
   declare content: string
   declare createdAt?: Date
-  declare UserUserId?: number
 }
 
 export function ArticleFactory (sequelize: Sequelize) {
@@ -31,10 +30,6 @@ export function ArticleFactory (sequelize: Sequelize) {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW
-      },
-      UserUserId: {
-        type: DataTypes.INTEGER,
-        allowNull: true
       }
     },
     {

@@ -5,7 +5,7 @@ import { User } from "./user";
 
 
 export class ForumComment extends Model<InferAttributes<ForumComment>, InferCreationAttributes<ForumComment>>{
-    declare id: number;
+    declare forumCommentId: number;
     declare comment: string;
     declare commentDatetime?: Date;
     declare likes: number
@@ -13,7 +13,7 @@ export class ForumComment extends Model<InferAttributes<ForumComment>, InferCrea
 
 export function ForumCommentFactory(sequelize: Sequelize) {
     ForumComment.init({
-        id: {
+        forumCommentId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
