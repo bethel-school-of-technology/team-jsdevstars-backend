@@ -6,9 +6,9 @@ const router = Router();
 
 router.post('/', createUser);
 
-router.post('/login', loginUser);
+// router.post('/login', loginUser);
 
-router.get('/:userId', getUser);
+// router.get('/:userId', getUser);
 
 // correct path in postman
 // router.get('/:userId', getUserComments);
