@@ -11,6 +11,6 @@ router.get('/:forumId', getForumById);
 
 router.put('/:forumId', editForum);
 
-router.delete('/:ForumId', deleteForum);
+router.delete('/:forumId', deleteForum);
 
 export default router;

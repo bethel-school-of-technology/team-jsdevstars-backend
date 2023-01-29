@@ -7,11 +7,19 @@ const article_1 = require("./article");
 const articleComment_1 = require("./articleComment");
 const forum_1 = require("./forum");
 const forumComment_1 = require("./forumComment");
+// const dbName = 'fordadsdb';
+// const username = 'fordads';
+// const password = 'Password1!';
+// const sequelize = new Sequelize(dbName, username, password, {
+//     host: 'db4free.net',
+//     port: 3306,
+//     dialect: 'mysql'
+// });
 const dbName = 'fordadsdb';
-const username = 'fordads';
-const password = 'Password1!';
+const username = 'root';
+const password = 'password';
 const sequelize = new sequelize_1.Sequelize(dbName, username, password, {
-    host: 'db4free.net',
+    host: 'localhost',
     port: 3306,
     dialect: 'mysql'
 });

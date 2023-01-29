@@ -40,32 +40,46 @@ export const createForum: RequestHandler = async (req, res, next) => {
     
 }
 
+/* Edits a forum */
 export const editForum: RequestHandler = async (req, res, next) => {
-    // let user: IUser | null = await verifyUser(req);
+    let user: User | null = await verifyUser(req);
+  
+    if (!user) {
+      return res.status(457).send("You shall not pass! ...sign in to edit your forum.");
+    }
 
-    // if (!user) {
-    //     return res.status(403).send();
-    // }
+    let forumId = parseInt(req.params.forumId);
+    const editedForum: any = req.body;
+    editedForum.userId = user.userId;
 
-    // let itemId = req.params.id;
-    // const updatedPost: IPost = new Post({
-    //     _id: itemId,
-    //     message: req.body.message
-    // });
+    let [updated] = await Forum.update(editedForum, {
+        where: { forumId: forumId }
+    });
 
-    // await Post.findByIdAndUpdate(itemId, { $set: updatedPost })
-
-    // res.status(200).json(updatedPost);
+    if (updated === 1) {
+        let forum: Forum | null = await Forum.findByPk(forumId);
+        res.status(200).json(forum);
+    } else {
+        res.status(459).send('Update failed');
+    }
 }
 
+/* Delete forum */
 export const deleteForum: RequestHandler = async (req, res, next) => {
-    // let user: IUser | null = await verifyUser(req);
+    let user: User | null = await verifyUser(req);
+  
+    if (!user) {
+      return res.status(462).send("You shall not pass! ...sign in to delete a forum.");
+    }
 
-    // if (!user) {
-    //     return res.status(403).send();
-    // }
+    let forumId = parseInt(req.params.forumId);
+    let deleted = await Forum.destroy({
+        where: { forumId: forumId }
+    });
 
-    // let itemId = req.params.id;
-    // let result = await Post.findByIdAndDelete(itemId);
-    // res.status(200).json(result);
+    if (deleted) {
+        res.status(200).send('deleted');
+    } else {
+        res.status(460).render('Deletion failed');
+    }
 }
