@@ -15,6 +15,16 @@ const sequelize = new Sequelize(dbName, username, password, {
     dialect: 'mysql'
 });
 
+// const dbName = 'fordadsdb';
+// const username = 'root';
+// const password = 'password';
+
+// const sequelize = new Sequelize(dbName, username, password, {
+//     host: 'localhost',
+//     port: 3306,
+//     dialect: 'mysql'
+// });
+
 ArticleFactory(sequelize);
 ArticleCommentFactory(sequelize);
 ForumFactory(sequelize);

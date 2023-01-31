@@ -30,5 +30,25 @@ export const getUser: RequestHandler = async (req, res, next) => {
 }
 
 export const loginUser: RequestHandler = async (req, res, next) => {
+    // Look up user by their username
+    let existingUser: User | null = await User.findOne({ 
+        where: { userName: req.body.userName }
+    });
 
+    // If user exists, check that password matches
+    if (existingUser) {
+        let passwordsMatch = await comparePasswords(req.body.password, existingUser.password);
+        
+        // If passwords match, create a JWT
+        if (passwordsMatch) {
+            let token = await signUserToken(existingUser);
+            res.status(200).json({ token });
+        }
+        else {
+            res.status(401).json('Invalid password');
+        }
+    }
+    else {
+        res.status(401).json('Invalid username');
+    }
 }
