@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const morgan_1 = __importDefault(require("morgan"));
 const express_1 = __importDefault(require("express"));
 const models_1 = require("./models");
-// import articleRoutes from './routes/articleRoutes'
+const articleRoutes_1 = __importDefault(require("./routes/articleRoutes"));
 // import articleCommentRoutes from './routes/articleCommentRoutes'
 const forumRoutes_1 = __importDefault(require("./routes/forumRoutes"));
 // import forumCommentRoutes from './routes/forumCommentRoutes'
@@ -18,7 +18,7 @@ app.use(express_1.default.urlencoded({ extended: true }));
 const cors = require('cors');
 app.use(cors());
 // routes
-// app.use('/api/articles', articleRoutes);
+app.use('/api/articles', articleRoutes_1.default);
 // app.use('/api/articles', articleCommentRoutes)
 app.use('/api/forum', forumRoutes_1.default);
 // app.use('/api/forum', forumCommentRoutes);
