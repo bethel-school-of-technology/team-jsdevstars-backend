@@ -1,5 +1,5 @@
 import { userInfo } from "os";
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
+import { DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
 import { Forum } from "./forum"; 
 import { User } from "./user";
 
@@ -8,7 +8,10 @@ export class ForumComment extends Model<InferAttributes<ForumComment>, InferCrea
     declare forumCommentId: number;
     declare comment: string;
     declare commentDatetime?: Date;
-    declare likes: number
+    declare likes: number;
+    declare userId: ForeignKey<User['userId']>;
+    declare forumId: ForeignKey<Forum['forumId']>;
+
 }
 
 export function ForumCommentFactory(sequelize: Sequelize) {
