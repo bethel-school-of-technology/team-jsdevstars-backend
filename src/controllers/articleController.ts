@@ -103,6 +103,8 @@ export const deleteArticle: RequestHandler = async (req, res, next) => {
     }
 }
 
+// Comments
+
 /* Retrieves a single article comment */
 export const getArticleCommentById: RequestHandler = async (req, res, next) => {
     let articleCommentId = parseInt(req.params.articleCommentId);
