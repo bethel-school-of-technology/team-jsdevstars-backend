@@ -26,7 +26,31 @@ export const createUser: RequestHandler = async (req, res, next) => {
     }
 }
 
+/* Retrieves profile information */
 export const getUser: RequestHandler = async (req, res, next) => {
+    let user: User | null = await verifyUser(req);
+  
+    if (!user) {
+      return res.status(474).send("You shall not pass! ...sign in to retrieve your profile information.");
+    }
+
+    if (user.userId != parseInt(req.params.userId)) {
+        return res.status(475).send("No use trying to view what you can't");
+    }
+
+    let completeUser: User | null = await User.findByPk(user.userId);
+    if (completeUser) {
+        let profile = {
+            firstName: completeUser.firstName,
+            lastName: completeUser.lastName,
+            userName: completeUser.userName,
+            email: completeUser.email
+        };
+        res.status(200).json(profile);
+    } else {
+        res.status(480).send("This user does not exist!");
+    }
+
 }
 
 export const loginUser: RequestHandler = async (req, res, next) => {

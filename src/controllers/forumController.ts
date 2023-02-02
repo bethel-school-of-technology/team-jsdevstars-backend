@@ -189,6 +189,6 @@ export const deleteForumComment: RequestHandler = async (req, res, next) => {
     if (deleted) {
         res.status(200).send('deleted');
     } else {
-        res.status(474).render('Deletion failed');
+        res.status(474).send('Deletion failed');
     }
 }
