@@ -1,4 +1,4 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
+import { DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
 import { User } from "./user"; 
 
 
@@ -7,6 +7,7 @@ export class Forum extends Model<InferAttributes<Forum>, InferCreationAttributes
     declare topicHeading: string;
     declare topicBody: string;
     declare createdAt?: Date;
+    declare userId: ForeignKey<User['userId']>;
 }
 
 export function ForumFactory(sequelize: Sequelize) {

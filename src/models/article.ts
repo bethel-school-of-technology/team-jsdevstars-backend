@@ -1,4 +1,4 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize
+import { DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model, Sequelize
 } from 'sequelize'
 import { User } from './user'
 
@@ -7,6 +7,7 @@ export class Article extends Model<InferAttributes<Article>, InferCreationAttrib
   declare title: string
   declare content: string
   declare createdAt?: Date
+  declare userId: ForeignKey<User['userId']>;
 }
 
 export function ArticleFactory (sequelize: Sequelize) {

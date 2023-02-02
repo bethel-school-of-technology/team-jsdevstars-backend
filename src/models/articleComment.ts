@@ -1,4 +1,4 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
+import { DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
 import { Article } from './article'
 import { User } from './user'
 
@@ -6,7 +6,9 @@ export class ArticleComment extends Model<InferAttributes<ArticleComment>, Infer
     declare articleCommentId: number;
     declare comment: string;
     declare commentDatetime?: Date;
-    declare likes: number
+    declare likes: number;
+    declare userId: ForeignKey<User['userId']>;
+    declare articleId: ForeignKey<Article['articleId']>;
 }
 
 export function ArticleCommentFactory(sequelize: Sequelize) {

@@ -1,17 +1,17 @@
-import { Router } from 'express';
-import { createArticleComment, deleteArticleComment, getAllArticleComments, getArticleComment, updateArticleComment } from '../controllers/articleCommentController';
-import {  } from '../controllers/articleController';
+// import { Router } from 'express';
+// import { createArticleComment, deleteArticleComment, editArticleComment, getAllArticleComments, getArticleComment } from '../controllers/articleController';
+// import {  } from '../controllers/articleController';
 
-const router = Router();
+// const router = Router();
 
-router.get('/', getAllArticleComments);
+// router.get('/', getAllArticleComments);
 
-router.post('/', createArticleComment);
+// router.post('/', createArticleComment);
 
-router.get('/:articleId', getArticleComment);
+// router.get('/:articleId', getArticleComment);
 
-router.put('/:articleId', updateArticleComment);
+// router.put('/:articleId', editArticleComment);
 
-router.delete('/:articleId', deleteArticleComment);
+// router.delete('/:articleId', deleteArticleComment);
 
-export default router;
+// export default router;
