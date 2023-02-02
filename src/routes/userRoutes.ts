@@ -1,6 +1,6 @@
 import { Router } from 'express';
 // import { getPublicUserTweets, getloggedinTweets } from '../controllers/tweetController';
-import { createUser, editUser, getUser, loginUser } from '../controllers/userController';
+import { createUser, deleteUser, editUser, getUser, loginUser } from '../controllers/userController';
 
 const router = Router();
 
@@ -11,6 +11,8 @@ router.post('/login', loginUser);
 router.get('/:userId', getUser);
 
 router.put('/:userId', editUser);
+
+router.delete('/:userId', deleteUser);
 
 // correct path in postman
 // router.get('/:userId', getUserComments);
