@@ -87,26 +87,28 @@ export const editUser: RequestHandler = async (req, res, next) => {
         return res.status(474).send("You shall not pass! ...sign in to retrieve your profile information.");
     };
 
-    // if (user.userId != parseInt(req.params.userId)) {
-    //     return res.status(475).send("No use trying to view what you can't");
-    // };
+    if (user.userId != parseInt(req.params.userId)) {
+        return res.status(475).send("No use trying to view what you can't");
+    };
 
     let userId = req.params.userId
     let updateUser: User = req.body
 
     let userFound: User | null = await User.findByPk(userId);
     
-    if (
-        userFound && userFound.userId == updateUser.userId && user.userId
+    // if (
+    //     userFound && userFound.userId == updateUser.userId 
         
-        // && updateUser.firstName && updateUser.lastName 
-        // && updateUser.userName && updateUser.email && updateUser.password 
-    ) {
-        await User.update(updateUser, {
-            where: { userId: userId }
-        })
+    //     // && updateUser.firstName && updateUser.lastName 
+    //     // && updateUser.userName && updateUser.email && updateUser.password 
+    // ) 
+    
+    if  (await User.update(updateUser, {
+        where: { userId: userId }
+    }))
+         
         res.status(200).json('You are truly successful')
-    } else {
+     else {
         res.status(408).json('Bing Bang')
     }
 
