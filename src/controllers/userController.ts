@@ -111,3 +111,30 @@ export const editUser: RequestHandler = async (req, res, next) => {
     }
 
 }
+
+/* Deletes user */
+export const deleteUser: RequestHandler = async (req, res, next) => {
+    let user: User | null = await verifyUser(req);
+  
+    if (!user) {
+      return res.status(462).send("You shall not pass! ...sign in to delete your profile.");
+    }
+
+    let userId = parseInt(req.params.userId);
+
+    // Check if the current user owns the profile to be deleted
+    let userProfile: any | null = await User.findByPk(userId);
+    if (userProfile.userId != user.userId) {
+        return res.status(481).send("This is murder!");
+    } 
+
+    let deleted = await User.update ({inactive: true}, {
+        where: { userId: userId }
+    });
+
+    if (deleted) {
+        res.status(200).send('Sad to see you go');
+    } else {
+        res.status(482).render('You can check out any time, but you can never leave');
+    }
+}
