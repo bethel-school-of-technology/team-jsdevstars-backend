@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteArticle = exports.updateArticle = exports.getArticle = exports.createArticle = exports.getAllArticles = void 0;
 const user_1 = require("../models/user");
 const article_1 = require("../models/article");
+const articleComment_1 = require("../models/articleComment");
 const auth_1 = require("../services/auth");
 const getAllArticles = async (req, res, next) => {
     let articles = await article_1.Article.findAll({
@@ -18,7 +19,7 @@ const createArticle = async (req, res, next) => {
         return res.status(402).send('Sign in to share a blog post');
     }
     let newArticle = req.body;
-    newArticle.userId = user.userId;
+    newArticle.UserUserId = user.userId;
     if (newArticle.content) {
         let created = await article_1.Article.create(newArticle);
         res.status(201).json(created);
@@ -30,7 +31,10 @@ const createArticle = async (req, res, next) => {
 exports.createArticle = createArticle;
 const getArticle = async (req, res, next) => {
     let articleId = req.params.articleId;
-    let article = await article_1.Article.findByPk(articleId);
+    let article = await article_1.Article.findByPk(articleId, {
+        include: { model: articleComment_1.ArticleComment,
+            required: false }
+    });
     if (article) {
         res.status(200).json(article);
     }

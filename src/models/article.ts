@@ -41,6 +41,16 @@ export function ArticleFactory (sequelize: Sequelize) {
 }
 
 export function AssociateUserArticles() {
-    User.hasMany(Article);
-    Article.belongsTo(User)
-}
+  User.hasMany(Article, {
+      foreignKey: {
+          name: 'userId',
+          allowNull: false
+      }
+  });
+  Article.belongsTo(User, {
+      foreignKey: {
+          name: 'userId',
+          allowNull: false
+      }
+  })
+} 

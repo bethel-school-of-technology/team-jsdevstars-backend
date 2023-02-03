@@ -50,6 +50,11 @@ function UserFactory(sequelize) {
             type: sequelize_2.DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: 0
+        },
+        inactive: {
+            type: sequelize_2.DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: 0
         }
     }, {
         tableName: 'users',

@@ -7,10 +7,10 @@ router.get('/', getAllArticles);
 
 router.post('/', createArticle);
 
-router.get('/:tweetId', getArticle);
+router.get('/:articleId', getArticle);
 
-router.put('/:tweetId', updateArticle);
+router.put('/:articleId', updateArticle);
 
-router.delete('/:tweetId', deleteArticle);
+router.delete('/:articleId', deleteArticle);
 
 export default router;

@@ -21,7 +21,7 @@ export const getAllArticles: RequestHandler = async (req, res, next) => {
     }
   
     let newArticle: Article = req.body
-    newArticle.userId = user.userId
+    newArticle.UserUserId = user.userId
   
     if (newArticle.content) {
       let created = await Article.create(newArticle)
@@ -34,14 +34,16 @@ export const getAllArticles: RequestHandler = async (req, res, next) => {
   
   export const getArticle: RequestHandler = async (req, res, next) => {
     let articleId = req.params.articleId
-    let article = await Article.findByPk(articleId)
+    let article = await Article.findByPk(articleId, {
+      include: { model: ArticleComment, 
+      required: false}
+    }) 
     if (article) {
       res.status(200).json(article)
     } else {
       res.status(412).json('No articles here')
     }
   }
-  
  
   
   export const updateArticle: RequestHandler = async (req, res, next) => {

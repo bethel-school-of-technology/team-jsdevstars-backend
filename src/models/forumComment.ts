@@ -5,7 +5,7 @@ import { User } from "./user";
 
 
 export class ForumComment extends Model<InferAttributes<ForumComment>, InferCreationAttributes<ForumComment>>{
-    declare id: number;
+    declare forumCommentId: number;
     declare comment: string;
     declare commentDatetime?: Date;
     declare likes: number
@@ -13,7 +13,7 @@ export class ForumComment extends Model<InferAttributes<ForumComment>, InferCrea
 
 export function ForumCommentFactory(sequelize: Sequelize) {
     ForumComment.init({
-        id: {
+        forumCommentId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
@@ -40,8 +40,29 @@ export function ForumCommentFactory(sequelize: Sequelize) {
 }
 
 export function AssociateForumCommentForumUser() {
-    Forum.hasMany(ForumComment);
-    ForumComment.belongsTo(Forum);
-    User.hasMany(ForumComment);
-    ForumComment.belongsTo(User)
+    Forum.hasMany(ForumComment, {
+        foreignKey: {
+            name: "forumId",
+            allowNull: false
+        },
+        onDelete: "CASCADE"
+    });
+    ForumComment.belongsTo(Forum, {
+        foreignKey: {
+            name: "forumId",
+            allowNull: false
+        },
+        onDelete: "CASCADE"});
+    User.hasMany(ForumComment, {
+        foreignKey: {
+            name: "userId",
+            allowNull: false
+        }
+    });
+    ForumComment.belongsTo(User, {
+        foreignKey: {
+            name: "userId",
+            allowNull: false
+        }
+    })
 }

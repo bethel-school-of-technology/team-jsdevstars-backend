@@ -1,32 +1,37 @@
+import morgan from "morgan";
 import express, { NextFunction, Request, Response } from 'express'
-import morgan from 'morgan'
-import { db } from './models'
-import tweetRoutes from './routes/tweetRoutes'
+import { db } from './models';
+import articleRoutes from './routes/articleRoutes'
+import articleCommentRoutes from './routes/articleCommentRoutes'
+import forumRoutes from './routes/forumRoutes'
+// import forumCommentRoutes from './routes/forumCommentRoutes'
 import userRoutes from './routes/userRoutes'
 
-const app = express()
-app.use(morgan('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+
+const app = express();
+
+app.use(morgan('dev'));
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 const cors = require('cors')
-const corsOptions = {
-  origin: ['http://localhost:3001'],
-}
-app.use(cors(corsOptions))
+app.use(cors())
 
-//routes
-app.use('/api/tweets', tweetRoutes)
-app.use('/api/users', userRoutes)
+// routes
+app.use('/api/articles', articleRoutes);
+app.use('/api/articles', articleCommentRoutes)
+app.use('/api/forum', forumRoutes);
+// app.use('/api/forum', forumCommentRoutes);
+app.use('/api/users', userRoutes);
+
 app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(405).end()
-})
+    res.status(405).end();
+});
 
-// syncing our database
-db.sync()
-  .then(() => console.log('Database synced!'))
-  .catch((err: Error) => console.log('Error syncing database'))
+// Syncing our database
+db.sync().then(() => {
+    console.info("connected to the database!")
+});
 
-const port = 3000
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`)
-})
+app.listen(3000);

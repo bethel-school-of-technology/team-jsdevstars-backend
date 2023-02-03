@@ -12,6 +12,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     declare createdAt?: Date;
     declare updatedAt?: Date;
     declare admin: boolean;
+    declare inactive: boolean;
 }
 
 export function UserFactory(sequelize: Sequelize) {
@@ -55,6 +56,11 @@ export function UserFactory(sequelize: Sequelize) {
             defaultValue: DataTypes.NOW,
         },
         admin: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: 0
+        },
+        inactive: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
             defaultValue: 0
