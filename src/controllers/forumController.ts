@@ -1,4 +1,3 @@
-import { resolveTxt } from "dns";
 import { RequestHandler } from "express";
 import { Forum } from "../models/forum";
 import { ForumComment } from "../models/forumComment";
@@ -11,12 +10,17 @@ export const getAllForums: RequestHandler = async (req, res, next) => {
     res.status(200).json(forumList);
 }
 
-/* Retrieves a single forum */
+/* Retrieves a single forum along with all associated forum comments */
 export const getForumById: RequestHandler = async (req, res, next) => {
     let forumId = parseInt(req.params.forumId);
     let forum: Forum | null = await Forum.findByPk(forumId);
     if (forum) {
-        res.status(200).json(forum);
+        let forumCommentList: ForumComment[] = await ForumComment.findAll({where: {forumId: forumId}});
+        let packet = {
+            forum: forum,
+            comments: forumCommentList
+        };
+        res.status(200).json(packet);
     } else {
         res.status(450).send("These are not the forums you are looking for.");
     }
@@ -185,6 +189,6 @@ export const deleteForumComment: RequestHandler = async (req, res, next) => {
     if (deleted) {
         res.status(200).send('deleted');
     } else {
-        res.status(474).render('Deletion failed');
+        res.status(474).send('Deletion failed');
     }
 }

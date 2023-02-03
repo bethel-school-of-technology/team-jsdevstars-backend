@@ -2,7 +2,7 @@ import morgan from "morgan";
 import express, { NextFunction, Request, Response } from 'express'
 import { db } from './models';
 import articleRoutes from './routes/articleRoutes'
-import articleCommentRoutes from './routes/articleCommentRoutes'
+// import articleCommentRoutes from './routes/articleCommentRoutes'
 import forumRoutes from './routes/forumRoutes'
 // import forumCommentRoutes from './routes/forumCommentRoutes'
 import userRoutes from './routes/userRoutes'
@@ -20,7 +20,7 @@ app.use(cors())
 
 // routes
 app.use('/api/articles', articleRoutes);
-app.use('/api/articles', articleCommentRoutes)
+// app.use('/api/articles', articleCommentRoutes)
 app.use('/api/forum', forumRoutes);
 // app.use('/api/forum', forumCommentRoutes);
 app.use('/api/users', userRoutes);
