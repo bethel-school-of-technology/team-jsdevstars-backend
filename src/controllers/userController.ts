@@ -59,7 +59,9 @@ export const getUser: RequestHandler = async (req, res, next) => {
 export const loginUser: RequestHandler = async (req, res, next) => {
     // Look up user by their username
     let existingUser: User | null = await User.findOne({ 
-        where: { email: req.body.email }
+        where: { email: req.body.email,
+                inactive: 0 
+            }
     });
 
     // If user exists, check that password matches
@@ -80,39 +82,60 @@ export const loginUser: RequestHandler = async (req, res, next) => {
     }
 }
 
-export const editUser: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req);
+// export const editUser: RequestHandler = async (req, res, next) => {
+//     let user: User | null = await verifyUser(req);
 
-    if (!user) {
-        return res.status(474).send("You shall not pass! ...sign in to retrieve your profile information.");
-    };
+//     if (!user) {
+//         return res.status(474).send("You shall not pass! ...sign in to retrieve your profile information.");
+//     };
 
-    if (user.userId != parseInt(req.params.userId)) {
-        return res.status(475).send("No use trying to view what you can't");
-    };
+//     if (user.userId != parseInt(req.params.userId)) {
+//         return res.status(475).send("No use trying to view what you can't");
+//     };
 
-    let userId = req.params.userId
-    let updateUser: User = req.body
+//     let userId = req.params.userId
+//     let updateUser: User = req.body
 
-    let userFound: User | null = await User.findByPk(userId);
+//     let userFound: User | null = await User.findByPk(userId);
     
-    // if (
-    //     userFound && userFound.userId == updateUser.userId 
+//     // if (
+//     //     userFound && userFound.userId == updateUser.userId 
         
-    //     // && updateUser.firstName && updateUser.lastName 
-    //     // && updateUser.userName && updateUser.email && updateUser.password 
-    // ) 
+//     //     // && updateUser.firstName && updateUser.lastName 
+//     //     // && updateUser.userName && updateUser.email && updateUser.password 
+//     // ) 
     
-    if  (await User.update(updateUser, {
-        where: { userId: userId }
-    }))
-         
-        res.status(200).json('You are truly successful')
-     else {
-        res.status(408).json('Bing Bang')
-    }
+//     // if (updateUser.firstName && updateUser.lastName && updateUser.userName && updateUser.email && updateUser.password ) {
+//     //         let hashedPassword = await hashPassword(updateUser.password);
+//     //         updateUser.password = hashedPassword;
+//     //         let updated = await updateUser.save();
+//     //         res.status(201).json({
+//     //             firstname: updated.firstName,
+//     //             lastname: updated.lastName,
+//     //             username: updated.userName,
+//     //             email: updated.email,
+//     //             password: updated.password
+//     //         });
+//     // }
+//     // else {
+//     //         res.status(460).send('Username, password, email and full name required');
+//     // }
+    
+//     // catch (err) {
+//     //     res.status(500).send(err);
+//     // }
 
-}
+//     if  
+//     (await User.update(updateUser, {
+//         where: { userId: userId }
+    
+//     }))
+//         res.status(200).json('You are truly successful')
+//      else {
+//         res.status(408).json('Bing Bang')
+//     }
+
+// }
 
 /* Deletes user */
 export const deleteUser: RequestHandler = async (req, res, next) => {

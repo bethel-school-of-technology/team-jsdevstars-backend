@@ -8,6 +8,7 @@ router.post('/', userController_1.createUser);
 router.post('/login', userController_1.loginUser);
 router.get('/:userId', userController_1.getUser);
 router.put('/:userId', userController_1.editUser);
+router.delete('/:userId', userController_1.deleteUser);
 // correct path in postman
 // router.get('/:userId', getUserComments);
 // not working in postman
