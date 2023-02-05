@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editUser = exports.loginUser = exports.getUser = exports.createUser = void 0;
+exports.deleteUser = exports.editUser = exports.loginUser = exports.getUser = exports.createUser = void 0;
 const user_1 = require("../models/user");
 const auth_1 = require("../services/auth");
 const createUser = async (req, res, next) => {
@@ -92,6 +92,24 @@ const editUser = async (req, res, next) => {
     //     // && updateUser.firstName && updateUser.lastName 
     //     // && updateUser.userName && updateUser.email && updateUser.password 
     // ) 
+    // if (updateUser.firstName && updateUser.lastName && updateUser.userName && updateUser.email && updateUser.password ) {
+    //         let hashedPassword = await hashPassword(updateUser.password);
+    //         updateUser.password = hashedPassword;
+    //         let updated = await updateUser.save();
+    //         res.status(201).json({
+    //             firstname: updated.firstName,
+    //             lastname: updated.lastName,
+    //             username: updated.userName,
+    //             email: updated.email,
+    //             password: updated.password
+    //         });
+    // }
+    // else {
+    //         res.status(460).send('Username, password, email and full name required');
+    // }
+    // catch (err) {
+    //     res.status(500).send(err);
+    // }
     if (await user_1.User.update(updateUser, {
         where: { userId: userId }
     }))
@@ -101,3 +119,26 @@ const editUser = async (req, res, next) => {
     }
 };
 exports.editUser = editUser;
+/* Deletes user */
+const deleteUser = async (req, res, next) => {
+    let user = await (0, auth_1.verifyUser)(req);
+    if (!user) {
+        return res.status(462).send("You shall not pass! ...sign in to delete your profile.");
+    }
+    let userId = parseInt(req.params.userId);
+    // Check if the current user owns the profile to be deleted
+    let userProfile = await user_1.User.findByPk(userId);
+    if (userProfile.userId != user.userId) {
+        return res.status(481).send("This is murder!");
+    }
+    let deleted = await user_1.User.update({ inactive: true }, {
+        where: { userId: userId }
+    });
+    if (deleted) {
+        res.status(200).send('Sad to see you go');
+    }
+    else {
+        res.status(482).render('You can check out any time, but you can never leave');
+    }
+};
+exports.deleteUser = deleteUser;
