@@ -6,7 +6,7 @@ import { verifyUser } from "../services/auth";
 
 /* Retrieves list of all forums */
 export const getAllForums: RequestHandler = async (req, res, next) => {
-    let forumList: Forum[] = await Forum.findAll();
+    let forumList: Forum[] = await Forum.findAll({include: { model: User }});
     res.status(200).json(forumList);
 }
 
@@ -15,10 +15,16 @@ export const getForumById: RequestHandler = async (req, res, next) => {
     let forumId = parseInt(req.params.forumId);
     let forum: Forum | null = await Forum.findByPk(forumId);
     if (forum) {
-        let forumCommentList: ForumComment[] = await ForumComment.findAll({where: {forumId: forumId}});
+        let forumCommentList: ForumComment[] = await ForumComment.findAll({
+            // include: {model: User}, 
+            where: {forumId: forumId}});
+        // let includeuserName: User[] = await User.findAll({
+        //     where: {userId: forumId}
+        // })
         let packet = {
             forum: forum,
-            comments: forumCommentList
+            comments: forumCommentList,
+            // userName: includeuserName
         };
         res.status(200).json(packet);
     } else {
