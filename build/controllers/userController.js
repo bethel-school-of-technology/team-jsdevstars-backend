@@ -55,7 +55,9 @@ exports.getUser = getUser;
 const loginUser = async (req, res, next) => {
     // Look up user by their username
     let existingUser = await user_1.User.findOne({
-        where: { email: req.body.email }
+        where: { email: req.body.email,
+            inactive: 0
+        }
     });
     // If user exists, check that password matches
     if (existingUser) {
