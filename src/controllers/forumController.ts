@@ -13,10 +13,11 @@ export const getAllForums: RequestHandler = async (req, res, next) => {
 /* Retrieves a single forum along with all associated forum comments */
 export const getForumById: RequestHandler = async (req, res, next) => {
     let forumId = parseInt(req.params.forumId);
-    let forum: Forum | null = await Forum.findByPk(forumId);
+    let forum: Forum | null = await Forum.findByPk(forumId, {
+        include: {model: User}});
     if (forum) {
         let forumCommentList: ForumComment[] = await ForumComment.findAll({
-            // include: {model: User}, 
+            include: {model: User}, 
             where: {forumId: forumId}});
         // let includeuserName: User[] = await User.findAll({
         //     where: {userId: forumId}
