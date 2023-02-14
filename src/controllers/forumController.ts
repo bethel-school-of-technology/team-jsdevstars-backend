@@ -16,7 +16,7 @@ export const getForumById: RequestHandler = async (req, res, next) => {
     let forum: Forum | null = await Forum.findByPk(forumId);
     if (forum) {
         let forumCommentList: ForumComment[] = await ForumComment.findAll({
-            // include: {model: User}, 
+            include: {model: User}, 
             where: {forumId: forumId}});
         // let includeuserName: User[] = await User.findAll({
         //     where: {userId: forumId}
