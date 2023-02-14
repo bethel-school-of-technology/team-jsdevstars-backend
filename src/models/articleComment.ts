@@ -1,17 +1,19 @@
-import { DataTypes, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
+import { DataTypes, ForeignKey, InferAttributes, InferCreationAttributes, Model, Sequelize, } from "sequelize";
 import { Article } from './article'
 import { User } from './user'
 
 export class ArticleComment extends Model<InferAttributes<ArticleComment>, InferCreationAttributes<ArticleComment>>{
-    declare id: number;
+    declare articleCommentId: number;
     declare comment: string;
     declare commentDatetime?: Date;
-    declare likes: number
+    declare likes: number;
+    declare userId: ForeignKey<User['userId']>;
+    declare articleId: ForeignKey<Article['articleId']>;
 }
 
 export function ArticleCommentFactory(sequelize: Sequelize) {
     ArticleComment.init({
-        id: {
+        articleCommentId: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
@@ -30,16 +32,36 @@ export function ArticleCommentFactory(sequelize: Sequelize) {
             type: DataTypes.INTEGER
         }
     }, {
-        tableName: 'article_comment',
+        tableName: 'articleComment',
         freezeTableName: true,
         sequelize
     });
 }
 
-export function AssociateArticleComments () {
-    Article.hasMany(ArticleComment);
-    ArticleComment.belongsTo(Article);
-    
-    User.hasMany(ArticleComment)
-    ArticleComment.belongsTo(User);
+export function AssociateArticleComments() {
+    Article.hasMany(ArticleComment, {
+        foreignKey: {
+            name: "articleId",
+            allowNull: false
+        },
+        onDelete: "CASCADE"
+    });
+    ArticleComment.belongsTo(Article, {
+        foreignKey: {
+            name: "articleId",
+            allowNull: false
+        },
+        onDelete: "CASCADE"});
+    User.hasMany(ArticleComment, {
+        foreignKey: {
+            name: "userId",
+            allowNull: false
+        }
+    });
+    ArticleComment.belongsTo(User, {
+        foreignKey: {
+            name: "userId",
+            allowNull: false
+        }
+    })
 }
