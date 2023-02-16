@@ -9,7 +9,7 @@ class ArticleComment extends sequelize_1.Model {
 exports.ArticleComment = ArticleComment;
 function ArticleCommentFactory(sequelize) {
     ArticleComment.init({
-        id: {
+        articleCommentId: {
             type: sequelize_1.DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
@@ -28,16 +28,38 @@ function ArticleCommentFactory(sequelize) {
             type: sequelize_1.DataTypes.INTEGER
         }
     }, {
-        tableName: 'article_comment',
+        tableName: 'articleComment',
         freezeTableName: true,
         sequelize
     });
 }
 exports.ArticleCommentFactory = ArticleCommentFactory;
 function AssociateArticleComments() {
-    article_1.Article.hasMany(ArticleComment);
-    ArticleComment.belongsTo(article_1.Article);
-    user_1.User.hasMany(ArticleComment);
-    ArticleComment.belongsTo(user_1.User);
+    article_1.Article.hasMany(ArticleComment, {
+        foreignKey: {
+            name: "articleId",
+            allowNull: false
+        },
+        onDelete: "CASCADE"
+    });
+    ArticleComment.belongsTo(article_1.Article, {
+        foreignKey: {
+            name: "articleId",
+            allowNull: false
+        },
+        onDelete: "CASCADE"
+    });
+    user_1.User.hasMany(ArticleComment, {
+        foreignKey: {
+            name: "userId",
+            allowNull: false
+        }
+    });
+    ArticleComment.belongsTo(user_1.User, {
+        foreignKey: {
+            name: "userId",
+            allowNull: false
+        }
+    });
 }
 exports.AssociateArticleComments = AssociateArticleComments;
