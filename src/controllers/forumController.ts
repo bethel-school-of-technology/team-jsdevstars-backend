@@ -76,7 +76,7 @@ export const editForum: RequestHandler = async (req, res, next) => {
     });
 
     if (updated === 1) {
-        let forum: Forum | null = await Forum.findByPk(forumId);
+        let forum: Forum | null = await Forum.findByPk(forumId, {include: {model: User}});
         res.status(200).json(forum);
     } else {
         res.status(459).send('Update failed');
