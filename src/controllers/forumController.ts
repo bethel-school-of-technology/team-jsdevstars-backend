@@ -35,10 +35,11 @@ export const getForumById: RequestHandler = async (req, res, next) => {
 
 /* Creates a new forum */
 export const createForum: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req);
-  
-    if (!user) {
-      return res.status(451).send("You shall not pass! ...sign in to create a forum.");
+    let user: User | null;
+    try {
+        user = await verifyUser(req);
+    } catch {
+        return res.status(401).send("You shall not pass! ...sign in to create a forum.");
     }
 
     const newForum: any = Forum.build(req.body);
