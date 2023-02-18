@@ -59,7 +59,9 @@ export const getUser: RequestHandler = async (req, res, next) => {
 export const loginUser: RequestHandler = async (req, res, next) => {
     // Look up user by their username
     let existingUser: User | null = await User.findOne({ 
-        where: { email: req.body.email }
+        where: { email: req.body.email,
+                inactive: 0 
+            }
     });
 
     // If user exists, check that password matches
@@ -87,27 +89,77 @@ export const editUser: RequestHandler = async (req, res, next) => {
         return res.status(474).send("You shall not pass! ...sign in to retrieve your profile information.");
     };
 
-    // if (user.userId != parseInt(req.params.userId)) {
-    //     return res.status(475).send("No use trying to view what you can't");
-    // };
+    if (user.userId != parseInt(req.params.userId)) {
+        return res.status(475).send("No use trying to view what you can't");
+    };
 
     let userId = req.params.userId
     let updateUser: User = req.body
 
     let userFound: User | null = await User.findByPk(userId);
     
-    if (
-        userFound && userFound.userId == updateUser.userId && user.userId
+    // if (
+    //     userFound && userFound.userId == updateUser.userId 
         
-        // && updateUser.firstName && updateUser.lastName 
-        // && updateUser.userName && updateUser.email && updateUser.password 
-    ) {
-        await User.update(updateUser, {
-            where: { userId: userId }
-        })
+    //     // && updateUser.firstName && updateUser.lastName 
+    //     // && updateUser.userName && updateUser.email && updateUser.password 
+    // ) 
+    
+    // if (updateUser.firstName && updateUser.lastName && updateUser.userName && updateUser.email && updateUser.password ) {
+    //         let hashedPassword = await hashPassword(updateUser.password);
+    //         updateUser.password = hashedPassword;
+    //         let updated = await updateUser.save();
+    //         res.status(201).json({
+    //             firstname: updated.firstName,
+    //             lastname: updated.lastName,
+    //             username: updated.userName,
+    //             email: updated.email,
+    //             password: updated.password
+    //         });
+    // }
+    // else {
+    //         res.status(460).send('Username, password, email and full name required');
+    // }
+    
+    // catch (err) {
+    //     res.status(500).send(err);
+    // }
+
+    if  
+    (await User.update(updateUser, {
+        where: { userId: userId }
+    
+    }))
         res.status(200).json('You are truly successful')
-    } else {
+     else {
         res.status(408).json('Bing Bang')
     }
 
+}
+
+/* Deletes user */
+export const deleteUser: RequestHandler = async (req, res, next) => {
+    let user: User | null = await verifyUser(req);
+  
+    if (!user) {
+      return res.status(462).send("You shall not pass! ...sign in to delete your profile.");
+    }
+
+    let userId = parseInt(req.params.userId);
+
+    // Check if the current user owns the profile to be deleted
+    let userProfile: any | null = await User.findByPk(userId);
+    if (userProfile.userId != user.userId) {
+        return res.status(481).send("This is murder!");
+    } 
+
+    let deleted = await User.update ({inactive: true}, {
+        where: { userId: userId }
+    });
+
+    if (deleted) {
+        res.status(200).send('Sad to see you go');
+    } else {
+        res.status(482).render('You can check out any time, but you can never leave');
+    }
 }

@@ -6,19 +6,26 @@ import { verifyUser } from "../services/auth";
 
 /* Retrieves list of all forums */
 export const getAllForums: RequestHandler = async (req, res, next) => {
-    let forumList: Forum[] = await Forum.findAll();
+    let forumList: Forum[] = await Forum.findAll({include: { model: User }});
     res.status(200).json(forumList);
 }
 
 /* Retrieves a single forum along with all associated forum comments */
 export const getForumById: RequestHandler = async (req, res, next) => {
     let forumId = parseInt(req.params.forumId);
-    let forum: Forum | null = await Forum.findByPk(forumId);
+    let forum: Forum | null = await Forum.findByPk(forumId, {
+        include: {model: User}});
     if (forum) {
-        let forumCommentList: ForumComment[] = await ForumComment.findAll({where: {forumId: forumId}});
+        let forumCommentList: ForumComment[] = await ForumComment.findAll({
+            include: {model: User}, 
+            where: {forumId: forumId}});
+        // let includeuserName: User[] = await User.findAll({
+        //     where: {userId: forumId}
+        // })
         let packet = {
             forum: forum,
-            comments: forumCommentList
+            comments: forumCommentList,
+            // userName: includeuserName
         };
         res.status(200).json(packet);
     } else {
@@ -28,10 +35,11 @@ export const getForumById: RequestHandler = async (req, res, next) => {
 
 /* Creates a new forum */
 export const createForum: RequestHandler = async (req, res, next) => {
-    let user: User | null = await verifyUser(req);
-  
-    if (!user) {
-      return res.status(451).send("You shall not pass! ...sign in to create a forum.");
+    let user: User | null;
+    try {
+        user = await verifyUser(req);
+    } catch {
+        return res.status(401).send("You shall not pass! ...sign in to create a forum.");
     }
 
     const newForum: any = Forum.build(req.body);
@@ -69,7 +77,7 @@ export const editForum: RequestHandler = async (req, res, next) => {
     });
 
     if (updated === 1) {
-        let forum: Forum | null = await Forum.findByPk(forumId);
+        let forum: Forum | null = await Forum.findByPk(forumId, {include: {model: User}});
         res.status(200).json(forum);
     } else {
         res.status(459).send('Update failed');
