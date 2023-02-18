@@ -7,9 +7,7 @@ const morgan_1 = __importDefault(require("morgan"));
 const express_1 = __importDefault(require("express"));
 const models_1 = require("./models");
 const articleRoutes_1 = __importDefault(require("./routes/articleRoutes"));
-// import articleCommentRoutes from './routes/articleCommentRoutes'
 const forumRoutes_1 = __importDefault(require("./routes/forumRoutes"));
-// import forumCommentRoutes from './routes/forumCommentRoutes'
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const app = (0, express_1.default)();
 app.use((0, morgan_1.default)('dev'));
@@ -19,12 +17,12 @@ const cors = require('cors');
 app.use(cors());
 // routes
 app.use('/api/articles', articleRoutes_1.default);
-// app.use('/api/articles', articleCommentRoutes)
 app.use('/api/forum', forumRoutes_1.default);
-// app.use('/api/forum', forumCommentRoutes);
 app.use('/api/users', userRoutes_1.default);
 app.use((req, res, next) => {
-    res.status(405).end();
+    res.status(405).render('error', {
+        message: "This is not the URL you are looking for!"
+    });
 });
 // Syncing our database
 models_1.db.sync().then(() => {
