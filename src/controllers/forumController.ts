@@ -58,7 +58,7 @@ export const editForum: RequestHandler = async (req, res, next) => {
     let user: User | null = await verifyUser(req);
   
     if (!user) {
-      return res.status(457).send("You shall not pass! ...sign in to edit your forum.");
+      return res.status(401).send("You shall not pass! ...sign in to edit your forum.");
     }
 
     let forumId = parseInt(req.params.forumId);

@@ -2,10 +2,9 @@ import morgan from "morgan";
 import express, { NextFunction, Request, Response } from 'express'
 import { db } from './models';
 import articleRoutes from './routes/articleRoutes'
-// import articleCommentRoutes from './routes/articleCommentRoutes'
 import forumRoutes from './routes/forumRoutes'
-// import forumCommentRoutes from './routes/forumCommentRoutes'
 import userRoutes from './routes/userRoutes'
+import path from "path";
 
 
 const app = express();
@@ -20,13 +19,13 @@ app.use(cors())
 
 // routes
 app.use('/api/articles', articleRoutes);
-// app.use('/api/articles', articleCommentRoutes)
 app.use('/api/forum', forumRoutes);
-// app.use('/api/forum', forumCommentRoutes);
 app.use('/api/users', userRoutes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    res.status(405).end();
+    res.status(405).render('error', {
+        message: "This is not the URL you are looking for!"
+    });
 });
 
 // Syncing our database
